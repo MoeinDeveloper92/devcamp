@@ -98,7 +98,6 @@ const BootcampSchema = new mongoose.Schema({
     },
     averageCost: {
         type: Number,
-
     },
     photo: {
         type: String,
@@ -163,6 +162,8 @@ BootcampSchema.pre("remove", async function (next) {
 
 //Reverse populate with virtuals
 BootcampSchema.virtual("courses", {
+    //here we define the PK, and FK... we say hey go to Course Collection, and map the bootcampId whoch is lcoalField, to the foreignField,
+    //and take out all its proeprty 
     ref: "Course",
     localField: "_id",
     foreignField: "bootcamp",
