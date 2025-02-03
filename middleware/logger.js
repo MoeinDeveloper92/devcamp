@@ -3,7 +3,16 @@
 //@desc     Logs request to the console
 const logger = (req, res, next) => {
     const { method, query: queryParams, baseUrl: path } = req
-
+    // setImmediate is a function in Node.js that schedules a callback function to be executed on the next iteration of the event loop, right after the current execution phase is complete.
+    //     How It Works
+    // setImmediate callbacks are executed after I / O operations but before timers(setTimeout / setInterval).
+    // It ensures that the function inside it runs as soon as possible after the main script execution.
+    // 
+    // 
+    // 
+    //  // Purpose:
+    // // Logs request details asynchronously without blocking the main execution.
+    // Ensures logging happens after the middleware finishes processing, avoiding potential performance bottlenecks.
     //logging request
     setImmediate(async () => {
         const requestLog = {

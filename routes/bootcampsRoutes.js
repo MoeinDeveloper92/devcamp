@@ -21,6 +21,8 @@ const router = express.Router()
 //anythin that has this address, mount it to the courseRoute
 router.use("/:bootcampId/courses", courseRouter)
 router.route("/:id/photo").put(bootcampFotoUpload)
+
+//api/v1/bootcamps/radius/:zipcode/:distamce
 router.route("/radius/:zipcode/:distance").get(getBootcampsInRadius)
 
 //without query params
