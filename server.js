@@ -4,6 +4,7 @@ const bootCampRoutes = require("./routes/bootcampsRoutes")
 const coursRoutes = require("./routes/coursesRoutes")
 const authRoutes = require("./routes/auth")
 const fileUpload = require("express-fileupload")
+const cookieParse = require("cookie-parser")
 // const logger = require("./middleware/logger")
 const morgan = require("morgan")
 const dotenv = require("dotenv").config({
@@ -24,6 +25,8 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
+//Cookie Parser
+app.use(cookieParse())
 //Dev Logging Middleware
 //I only want this to run if we are in development
 if (process.env.NODE_ENV === "development") {

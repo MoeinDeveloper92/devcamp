@@ -3,7 +3,7 @@ const User = require("../models/User")
 const asyncHandler = require("../middleware/async")
 //@desc     Register a user
 //@route    POST api/v1/auth/register
-//@access   pivli
+//@access   private
 exports.register = asyncHandler(async (req, res, next) => {
     const { name, email, password, role } = req.body
     //create user
@@ -16,11 +16,7 @@ exports.register = asyncHandler(async (req, res, next) => {
 
     //keep in mind that, static is called on theModel , but method called on the created resource that we getting from db
     //creat etoken
-    const token = user.getSignedJwtToken()
-    res.status(201).json({
-        success: true,
-        token
-    })
+    sendTokenResponse(user, 200, res)
 
 })
 
@@ -52,9 +48,26 @@ exports.login = asyncHandler(async (req, res, next) => {
     }
 
     //create Token
-    const token = user.getSignedJwtToken()
-
-    res.status(200).json({ success: true, token })
-
+    sendTokenResponse(user, 200, res)
 
 })
+
+
+//get token from model, create cookie and send response
+const sendTokenResponse = (user, statusCode, res) => {
+    //createtoekn
+    const token = user.getSignedJwtToken();
+    const options = {
+        //this should give us 30 days
+        expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000),
+        //we only want the cookie to be accessed thoruhgb client side
+        httpOnly: true,
+    }
+    if (process.env.NODE_ENV === "production") {
+        options["secure"] = true
+    }
+    res
+        .status(statusCode)
+        .cookie("token", token, options)
+        .json({ success: true, token })
+}
