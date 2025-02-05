@@ -26,7 +26,7 @@ exports.protected = asyncHandler(async (req, res, next) => {
         // { id: '67a112757f960d7bc608d887', iat: 1738660446, exp: 1741252446 }
         const decoded = jwt.decode(token, process.env.JWT_SECRET)
         //This decioded objet holds our payload
-        console.log(decoded)
+        // console.log(decoded)
         //this user is the curerntly logged in user!!!
         req.user = await User.findById(decoded.id)
 
@@ -37,7 +37,8 @@ exports.protected = asyncHandler(async (req, res, next) => {
 })
 
 
-//Gran access to specific role
+//Grant access to specific role
+//this syntax means this fucnion will get a bunch of arguments
 exports.roleGuard = (...roles) => {
     return (req, res, next) => {
         if (!roles.includes(req.user.role)) {

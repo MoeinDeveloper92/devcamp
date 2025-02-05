@@ -81,6 +81,7 @@ CourseSchema.post("save", async function (next) {
 
 //2. Call getAverage Cost Before Remove
 CourseSchema.pre("remove", async function (next) {
+    //each course has a bootcamp Id
     this.constructor.getAverageCost(this.bootcamp)
     next()
 })
