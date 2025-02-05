@@ -36,6 +36,11 @@ const CourseSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Bootcamp",
         required: true
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
     }
 })
 //we should create a relationship to bootcamps
@@ -76,14 +81,14 @@ CourseSchema.statics.getAverageCost = async function (bootcampId) {
 //1. Call get Average Cost After Save
 CourseSchema.post("save", async function (next) {
     this.constructor.getAverageCost(this.bootcamp)
-    next()
+
 })
 
 //2. Call getAverage Cost Before Remove
 CourseSchema.pre("remove", async function (next) {
     //each course has a bootcamp Id
     this.constructor.getAverageCost(this.bootcamp)
-    next()
+
 })
 const Course = mongoose.model("Course", CourseSchema)
 module.exports = Course
