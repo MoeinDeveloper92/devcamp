@@ -41,6 +41,8 @@ exports.protected = asyncHandler(async (req, res, next) => {
 //this syntax means this fucnion will get a bunch of arguments
 exports.roleGuard = (...roles) => {
     return (req, res, next) => {
+        //if the role of the user was not one of the roles mentioned int he roleGuald funciton,
+        //then throw an error....
         if (!roles.includes(req.user.role)) {
             return next(new ErrorResponse(`User role ${req.user.role} is unauthorized to access this route!`, 403))
         }
