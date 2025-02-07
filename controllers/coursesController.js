@@ -111,8 +111,6 @@ exports.updateCourse = asyncHandler(async (req, res, next) => {
 //@access   Private
 exports.deleteCourse = asyncHandler(async (req, res, next) => {
     let course = await Course.findById(req.params.id)
-
-   
     if (!course) {
         return next(new ErrorResponse(`No Course With the Id of ${req.params.id}`, 404))
     }
