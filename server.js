@@ -4,6 +4,7 @@ const bootCampRoutes = require("./routes/bootcampsRoutes")
 const coursRoutes = require("./routes/coursesRoutes")
 const authRoutes = require("./routes/auth")
 const userRoutes = require("./routes/users")
+const reviewRoutes = require("./routes/reviewRoutes")
 const fileUpload = require("express-fileupload")
 const cookieParse = require("cookie-parser")
 // const logger = require("./middleware/logger")
@@ -45,6 +46,7 @@ app.use("/api/v1/bootcamps", bootCampRoutes)
 app.use("/api/v1/courses", coursRoutes)
 app.use("/api/v1/auth", authRoutes)
 app.use("/api/v1/users", userRoutes)
+app.use("/api/v1/reviews", reviewRoutes)
 
 app.use((req, res, next) => {
     res.status(404).json({

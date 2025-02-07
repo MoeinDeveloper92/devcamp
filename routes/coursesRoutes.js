@@ -6,7 +6,6 @@ const Course = require("../models/Course")
 const advancedResults = require("../middleware/advancedResult")
 
 
-
 router.route("/")
     .get(advancedResults(Course, { path: "bootcamp", select: "name description" }), getCourses)
     .post(protected, roleGuard("publisher", "admin"), createCourse)
