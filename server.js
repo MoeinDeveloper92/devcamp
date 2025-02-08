@@ -5,6 +5,9 @@ const coursRoutes = require("./routes/coursesRoutes")
 const authRoutes = require("./routes/auth")
 const userRoutes = require("./routes/users")
 const reviewRoutes = require("./routes/reviewRoutes")
+const mongoSanitize = require("express-mongo-sanitize")
+const helmet = require("helmet")
+const xss = require("xss-clean")
 const fileUpload = require("express-fileupload")
 const cookieParse = require("cookie-parser")
 // const logger = require("./middleware/logger")
@@ -37,6 +40,16 @@ if (process.env.NODE_ENV === "development") {
 
 //File Uploading
 app.use(fileUpload())
+
+
+//Set Securoty Headers
+app.use(helmet())
+
+//Prevent XSS attacks
+app.use(xss())
+
+//Sanitize Data
+app.use(mongoSanitize())
 
 //set static folder
 app.use(express.static(path.join(__dirname, "public")))
