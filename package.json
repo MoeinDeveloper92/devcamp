@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Devcamper backend API",
   "main": "server.js",
+  "type": "commonjs",
   "scripts": {
     "start:prod": "NODE_ENV=production node server.js",
     "start:dev": " nodemon server.js",
